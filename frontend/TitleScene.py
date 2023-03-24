@@ -172,6 +172,8 @@ class TitleScene(Scene):
                 zero_player_pressed = True if self.zero_player_rect.collidepoint(e.pos) else False
                 if zero_player_pressed:
                     self.game_zero_player = True
+                    self.game_one_player = False
+                    self.game_two_player = False
                     self.game_start_game = True
 
                 one_player_pressed = True if self.one_player_rect.collidepoint(e.pos) else False
