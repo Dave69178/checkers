@@ -1,7 +1,6 @@
 import pygame
 from pygame.locals import *
 from frontend.SceneManager import SceneMananger
-from ai.Search import test_get_ai_move, test_time
 
 WIN_WIDTH = 1200
 WIN_HEIGHT = 1200
@@ -10,9 +9,6 @@ DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
 DEPTH = 0
 FLAGS = 0
 
-def test():
-    #test_get_ai_move()
-    test_time()
 
 def main():
     pygame.init()
@@ -38,5 +34,4 @@ def main():
     return 0
 
 if __name__=="__main__":
-    #test()
     main()
