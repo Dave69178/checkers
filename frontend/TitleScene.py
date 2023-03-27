@@ -34,7 +34,7 @@ class TitleScene(Scene):
         # Player count buttons
         self.zero_player = self.font.render("AI vs AI", True, (255,255,255), (160,170,170))
         self.zero_player_selected = self.font.render("AI vs AI", True, (255,255,255), (150,120,70))
-        self.zero_player_rect = self.zero_player.get_rect(center=(900, 900))
+        self.zero_player_rect = self.zero_player.get_rect(center=(900, 550))
         self.one_player = self.font.render("One Player", True, (255,255,255), (160,170,170))
         self.one_player_selected = self.font.render("One Player", True, (255,255,255), (150,120,70))
         self.one_player_rect = self.one_player.get_rect(center=(300, 300))
@@ -66,18 +66,21 @@ class TitleScene(Scene):
         self.diff3_disabled = self.font.render(" 3 ", True, (60,60,60), (90,90,90))
         self.diff3_selected = self.font.render(" 3 ", True, (255,255,255), (150,120,70))
         self.diff3_rect = self.diff3.get_rect(center=(400, 650))
+        # Additional Settings text
+        self.additional = self.font.render("Additional Settings", True, (255,255,255))
+        self.additional_rect = self.additional.get_rect(center=(600, 750))
         # Help function button
         self.help = self.font.render("Help", True, (255,255,255), (160,170,170))
         self.help_selected = self.font.render("Help", True, (255,255,255), (150,120,70))
-        self.help_rect = self.help.get_rect(center=(1000, 1000))
+        self.help_rect = self.help.get_rect(center=(500, 850))
         # Regicide Button
         self.regicide = self.font.render("Regicide", True, (255,255,255), (160,170,170))
         self.regicide_selected = self.font.render("Regicide", True, (255,255,255), (150,120,70))
-        self.regicide_rect = self.regicide.get_rect(center=(800, 1000))
+        self.regicide_rect = self.regicide.get_rect(center=(700, 850))
         # Start Game button
         self.start_game = self.font.render("Start Game", True, (255,255,255), (160,170,170))
         self.start_game_disabled = self.font.render("Start Game", True, (60,60,60), (90,90,90))
-        self.start_game_rect = self.start_game.get_rect(center=(600, 800))
+        self.start_game_rect = self.start_game.get_rect(center=(600, 1100))
 
     def render(self, screen):
         screen.fill((0, 0, 0))
@@ -85,6 +88,7 @@ class TitleScene(Scene):
         screen.blit(self.rules, self.rules_rect)
         screen.blit(self.play_as, self.play_as_rect)
         screen.blit(self.difficulty_text, self.difficulty_text_rect)
+        screen.blit(self.additional, self.additional_rect)
         if self.game_help:
             screen.blit(self.help_selected, self.help_rect)
         else:
