@@ -16,7 +16,7 @@ class GameScene(Scene):
 	"""
 	Page that contains the game. Initialised with game settings selected on the title screen.
 	"""
-	def __init__(self, one_player, red=None, difficulty=None):
+	def __init__(self, one_player, red=None, difficulty=None, help=False):
 		"""
 		Initialise GameScene. If one player game, include other game and AI settings.
 		params:
@@ -47,7 +47,7 @@ class GameScene(Scene):
 		self.log_surface.fill((255,255,255))
 		self.log_surface_rect = self.log_surface.get_rect(center=(600,1100))
 		# Game
-		self.game = gsh.create_checker_game_from_selected_settings(one_player, red, difficulty)
+		self.game = gsh.create_checker_game_from_selected_settings(one_player, red, difficulty, help)
 		self.selected_square = None
 		self.indicator_squares = None 
 		self.active_colour = None

@@ -1,9 +1,11 @@
 import time
 import game.CheckersHelper as ch
 import ai.Search as s
+import ai.HelpSystem as help
+import game.Players as pl
 
 class Checkers:
-	def __init__(self, red_player, black_player, board=None, active_colour=None) -> None:
+	def __init__(self, red_player, black_player, board=None, active_colour=None, help=False) -> None:
 		"""
 		Initialise Checkers game.
 		params:
@@ -29,6 +31,7 @@ class Checkers:
 		self.game_state = 0
 		self.legal_moves = ch.get_all_one_step_moves_for_colour(self.board, self.active_colour)
 		self.game_log = []
+		self.help = help
 
 	def make_move(self, start_square, end_square):
 		"""
@@ -81,6 +84,8 @@ class Checkers:
 			self.active_colour = 1 if self.active_colour == -1 else -1
 			self.active_player = self.red_player if self.active_colour == -1 else self.black_player
 			self.legal_moves = ch.get_all_one_step_moves_for_colour(self.board, self.active_colour)
+			if self.help and isinstance(self.active_player, pl.Human):
+				help.get_help_message_for_position(self)
 		else:
 			self.game_state = end_condition
 			self.turn_count += 1

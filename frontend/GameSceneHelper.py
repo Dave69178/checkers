@@ -99,20 +99,21 @@ def get_square_clicked(square_rects, event):
 				return [row, col]
 	return None
 
-def create_checker_game_from_selected_settings(one_player, red, difficulty):
+def create_checker_game_from_selected_settings(one_player, red, difficulty, help):
 	"""
 	Create players and game based on settings selected on title screen.
 	params:
 	  one_player: (bool) True if one player, False if Two
 	  red: (bool) True if player is red, False if black (None if two player game)
 	  difficulty: (int) in range:[1,2,3], None if two player game
+	  help: (bool)
 	return: (Checkers) Game object
 	"""
 	if one_player == None:
 		print("AI vs AI")
 		red_player = pl.AI(-1, 2)
 		black_player = pl.AI(1, 3)
-		return c.Checkers(red_player, black_player)
+		return c.Checkers(red_player, black_player, help=help)
 	if one_player:
 		print("one player")
 		if red:
@@ -125,4 +126,4 @@ def create_checker_game_from_selected_settings(one_player, red, difficulty):
 		print("two player")
 		red_player = pl.Human(-1)
 		black_player = pl.Human(1)
-	return c.Checkers(red_player, black_player)
+	return c.Checkers(red_player, black_player, help=help)

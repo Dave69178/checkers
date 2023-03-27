@@ -21,6 +21,7 @@ class TitleScene(Scene):
         self.game_diff1 = False
         self.game_diff2 = False
         self.game_diff3 = False
+        self.game_help = False
         self.game_start_game = False
         # Text and Buttons
         # Title
@@ -64,6 +65,10 @@ class TitleScene(Scene):
         self.diff3_disabled = self.font.render(" 3 ", True, (60,60,60), (90,90,90))
         self.diff3_selected = self.font.render(" 3 ", True, (255,255,255), (150,120,70))
         self.diff3_rect = self.diff3.get_rect(center=(400, 650))
+        # Help function button
+        self.help = self.font.render("Help", True, (255,255,255), (160,170,170))
+        self.help_selected = self.font.render("Help", True, (255,255,255), (150,120,70))
+        self.help_rect = self.help.get_rect(center=(1000, 1000))
         # Start Game button
         self.start_game = self.font.render("Start Game", True, (255,255,255), (160,170,170))
         self.start_game_disabled = self.font.render("Start Game", True, (60,60,60), (90,90,90))
@@ -75,6 +80,11 @@ class TitleScene(Scene):
         screen.blit(self.rules, self.rules_rect)
         screen.blit(self.play_as, self.play_as_rect)
         screen.blit(self.difficulty_text, self.difficulty_text_rect)
+        if self.game_help:
+            screen.blit(self.help_selected, self.help_rect)
+        else:
+            screen.blit(self.help, self.help_rect)
+
         if self.game_zero_player:
             screen.blit(self.zero_player_selected, self.zero_player_rect)
         else:
@@ -168,6 +178,10 @@ class TitleScene(Scene):
                 rules_pressed = True if self.rules_rect.collidepoint(e.pos) else False
                 if rules_pressed:
                     self.manager.go_to(rs.RulesScene())
+                
+                help_pressed = True if self.help_rect.collidepoint(e.pos) else False
+                if help_pressed:
+                    self.game_help = True if not self.game_help else False
 
                 zero_player_pressed = True if self.zero_player_rect.collidepoint(e.pos) else False
                 if zero_player_pressed:
@@ -243,6 +257,6 @@ class TitleScene(Scene):
                             difficulty = 2
                         else:
                             difficulty = 3
-                        self.manager.go_to(gs.GameScene(self.game_one_player, self.game_red, difficulty))
+                        self.manager.go_to(gs.GameScene(self.game_one_player, self.game_red, difficulty, self.game_help))
                     else:
-                        self.manager.go_to(gs.GameScene(self.game_one_player))
+                        self.manager.go_to(gs.GameScene(self.game_one_player, help=self.game_help))
