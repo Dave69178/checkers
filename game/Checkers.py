@@ -28,6 +28,7 @@ class Checkers:
 		self.turn_count = 0
 		self.game_state = 0
 		self.legal_moves = ch.get_all_one_step_moves_for_colour(self.board, self.active_colour)
+		self.game_log = []
 
 	def make_move(self, start_square, end_square):
 		"""
@@ -38,10 +39,14 @@ class Checkers:
 		"""
 		is_legal_move = ch.is_move_legal(self.board, self.legal_moves, self.active_colour, start_square, end_square)
 		if is_legal_move:
+			colour = "Black" if self.active_colour == 1 else "Red"
+			ch.log_message(self.game_log, f"{colour} made move: {start_square} to {end_square}")
 			if ch.update_board(self.board, start_square, end_square):
 				self._end_turn()
 			else:
 				self.legal_moves = ch.get_all_one_step_moves_for_colour(self.board, self.active_colour)
+		else:
+			ch.log_message(self.game_log, "That is not a legal move.")
 
 	def ai_move_generator(self):
 		"""

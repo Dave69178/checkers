@@ -1,5 +1,6 @@
 from collections import deque
 import copy
+import datetime as dt
 
 def create_starting_board():
     """
@@ -559,4 +560,8 @@ def is_piece_to_capture(board, checker, start_square, end_square):
         # Not opponent piece
         return False
     
+
+def log_message(message_log, message):
+    log_time = dt.datetime.now().time()
+    message_log.append(f"{str(log_time)[0:8]}: {message}")
 

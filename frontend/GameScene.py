@@ -1,4 +1,5 @@
 import pygame
+import datetime as dt
 from pygame.locals import *
 from frontend.Scene import Scene
 import frontend.TitleScene as ts
@@ -28,6 +29,7 @@ class GameScene(Scene):
 		# Fonts
 		self.font = pygame.font.SysFont('Arial', 56)
 		self.sfont = pygame.font.SysFont('Arial', 32)
+		self.logfont = pygame.font.SysFont('Arial', 25)
 		# Home Button
 		self.home = self.font.render('Home', True, (255, 255, 255), (160,170,170))
 		self.home_rect = self.home.get_rect(center=(100,50))
@@ -39,6 +41,11 @@ class GameScene(Scene):
 		self.status_rect = self.status_black_move.get_rect(topleft=(200,150))
 		# Board graphics
 		self.board_rects = gsh.create_board_squares(SQUARE_SIZE, X_OFFSET_BOARD, Y_OFFSET_BOARD)
+		# Message log
+		self.message_log = []
+		self.log_surface = pygame.Surface((SQUARE_SIZE * 8, 150))
+		self.log_surface.fill((255,255,255))
+		self.log_surface_rect = self.log_surface.get_rect(center=(600,1100))
 		# Game
 		self.game = gsh.create_checker_game_from_selected_settings(one_player, red, difficulty)
 		self.selected_square = None
@@ -48,7 +55,6 @@ class GameScene(Scene):
 		self.count = 0
 		self.ai_generator = None
 
-
 	def render(self, screen):
 		screen.fill((0, 0, 0))
 		screen.blit(self.home, self.home_rect)
@@ -56,6 +62,7 @@ class GameScene(Scene):
 		gsh.render_board(screen, self.board_rects)
 		gsh.render_checkers(screen, self.game.board, SQUARE_SIZE, X_OFFSET_CHECKERS, Y_OFFSET_CHECKERS)
 		gsh.render_move_indicators(screen, self.indicator_squares, SQUARE_SIZE, X_OFFSET_CHECKERS, Y_OFFSET_CHECKERS)
+		self.render_log(screen, self.log_surface)
 
 	def render_game_status_text(self, screen):
 		"""
@@ -75,6 +82,7 @@ class GameScene(Scene):
 			screen.blit(self.status_black_win, self.status_rect)
 
 	def update(self):
+		self.update_log()
 		if isinstance(self.game.active_player, pl.AI):
 			if self.game.game_state == 0:
 				if self.ai_generator == None:
@@ -96,6 +104,7 @@ class GameScene(Scene):
 				square_clicked = gsh.get_square_clicked(self.board_rects, e)
 				if square_clicked != None:
 					self.handle_square_click(square_clicked)
+
 
 	def handle_square_click(self, square_clicked):
 		"""
@@ -119,6 +128,27 @@ class GameScene(Scene):
 				else:
 					pass
 
+	def render_log(self, screen, log_surface):
+		"""
+		Given a log Surface object, render it to the screen.
+		params:
+		  screen: (Surface)
+		  log_surface: (Surface)
+		"""
+		screen.blit(log_surface, self.log_surface_rect)
+	
+	def update_log(self):
+		self.log_surface = pygame.Surface((SQUARE_SIZE * 8, 150))
+		self.log_surface.fill((255,255,255))
+		self.message_log = self.game.game_log
+		y_pos = 0
+		num_messages = 4
+		if len(self.message_log) < 4:
+			num_messages = len(self.message_log)
+		for message in self.message_log[-num_messages:]:
+			message_text = self.logfont.render(message, False, (0, 0, 0))
+			self.log_surface.blit(message_text, (0, y_pos))
+			y_pos += 34
 						
 						
 
