@@ -89,7 +89,7 @@ def get_colour_checker_count(board, colour):
     return count
 
 
-def update_board(board, start_square, end_square):
+def update_board(board, start_square, end_square, regicide):
     """
     Given a legal move, apply the move.
     params:
@@ -100,18 +100,19 @@ def update_board(board, start_square, end_square):
     """
     is_capture = True if abs(start_square[0] - end_square[0]) == 2 else False
     if is_capture:
-        return apply_capture_move(board, start_square, end_square)
+        return apply_capture_move(board, start_square, end_square, regicide)
     else:
         return apply_non_capture_move(board, start_square, end_square)
         
 
-def apply_capture_move(board, start_square, end_square):
+def apply_capture_move(board, start_square, end_square, regicide):
     """
     Execute capture move to update board, return value indicating whether turn has ended or not.
     params:
       board: (list[list : [row, col]])
       start_square: ([int, int]) row,col
       end_square: ([int,int]) row,col
+      regicide: (bool)
     return: (bool) Whether turn has ended (True), or not (False)
     """
     start_r = start_square[0]
@@ -119,6 +120,12 @@ def apply_capture_move(board, start_square, end_square):
     end_r = end_square[0]
     end_c = end_square[1]
     crown = check_for_crowning(board[start_r][start_c], end_square)
+    # If regicide, check if King captured
+    row_diff = end_square[0] - start_square[0]
+    col_diff = end_square[1] - start_square[1]
+    if regicide:
+        if abs(board[start_square[0] + row_diff // 2][start_square[1] + col_diff // 2]) == 2:
+            crown = True
     new_checker_val = 0
     if crown:
         new_checker_val = 2 * board[start_r][start_c]
@@ -126,8 +133,6 @@ def apply_capture_move(board, start_square, end_square):
         new_checker_val = board[start_r][start_c]
     # Execute capture
     board[start_r][start_c], board[end_r][end_c] = 0, new_checker_val
-    row_diff = end_square[0] - start_square[0]
-    col_diff = end_square[1] - start_square[1]
     board[start_square[0] + row_diff // 2][start_square[1] + col_diff // 2] = 0
     # If crowned, end turn
     if crown:
@@ -257,7 +262,7 @@ def get_all_one_step_moves_for_colour(board, colour):
     return legal_moves
 
 
-def get_all_turn_end_positions(board, colour):
+def get_all_turn_end_positions(board, colour, regicide):
     """
     Get every possible board state after turn is finished.
     params:
@@ -265,18 +270,18 @@ def get_all_turn_end_positions(board, colour):
       colour: (int)
     return: (list : board), [] if no positions (game has ended)
     """
-    moves_store = get_all_move_sequences(board, colour)
+    moves_store = get_all_move_sequences(board, colour, regicide)
     # Get board position after each move
     positions = []
     for sequence in moves_store:
         temp_board = copy.deepcopy(board)
         for move in sequence:
-            update_board(temp_board, move[0], move[1])
+            update_board(temp_board, move[0], move[1], regicide)
         positions.append(temp_board)
     return positions
 
 
-def get_all_move_sequences(board, colour):
+def get_all_move_sequences(board, colour, regicide):
     """
     Get every move sequence for board position and colour.
     params:
@@ -304,7 +309,7 @@ def get_all_move_sequences(board, colour):
     for row in range(8):
         for col in range(8):
             if board[row][col] * colour > 0:
-                capture_paths = get_multi_capture_moves_for_square(board, [row,col])
+                capture_paths = get_multi_capture_moves_for_square(board, [row,col], regicide)
                 if len(capture_paths) > 0:
                     # Force captures
                     is_captures = True
@@ -321,7 +326,7 @@ def get_all_move_sequences(board, colour):
     return moves_store
 
 
-def get_multi_capture_moves_for_square(board, start_square):
+def get_multi_capture_moves_for_square(board, start_square, regicide):
     """
     Given a square, find all of the different capture moves (paths) possible.
     params:
@@ -362,7 +367,7 @@ def get_multi_capture_moves_for_square(board, start_square):
         else:
             for child in children:
                 temp = copy.deepcopy(v.board)
-                if update_board(temp, v.square, child):
+                if update_board(temp, v.square, child, regicide):
                     # End turn
                     queue.appendleft(Node(temp, False, v, child, True))
                     continue

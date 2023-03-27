@@ -22,6 +22,7 @@ class TitleScene(Scene):
         self.game_diff2 = False
         self.game_diff3 = False
         self.game_help = False
+        self.game_regicide = False
         self.game_start_game = False
         # Text and Buttons
         # Title
@@ -69,6 +70,10 @@ class TitleScene(Scene):
         self.help = self.font.render("Help", True, (255,255,255), (160,170,170))
         self.help_selected = self.font.render("Help", True, (255,255,255), (150,120,70))
         self.help_rect = self.help.get_rect(center=(1000, 1000))
+        # Regicide Button
+        self.regicide = self.font.render("Regicide", True, (255,255,255), (160,170,170))
+        self.regicide_selected = self.font.render("Regicide", True, (255,255,255), (150,120,70))
+        self.regicide_rect = self.regicide.get_rect(center=(800, 1000))
         # Start Game button
         self.start_game = self.font.render("Start Game", True, (255,255,255), (160,170,170))
         self.start_game_disabled = self.font.render("Start Game", True, (60,60,60), (90,90,90))
@@ -84,6 +89,11 @@ class TitleScene(Scene):
             screen.blit(self.help_selected, self.help_rect)
         else:
             screen.blit(self.help, self.help_rect)
+
+        if self.game_regicide:
+            screen.blit(self.regicide_selected, self.regicide_rect)
+        else:
+            screen.blit(self.regicide, self.regicide_rect)
 
         if self.game_zero_player:
             screen.blit(self.zero_player_selected, self.zero_player_rect)
@@ -183,6 +193,10 @@ class TitleScene(Scene):
                 if help_pressed:
                     self.game_help = True if not self.game_help else False
 
+                regicide_pressed = True if self.regicide_rect.collidepoint(e.pos) else False
+                if regicide_pressed:
+                    self.game_regicide = True if not self.game_regicide else False
+
                 zero_player_pressed = True if self.zero_player_rect.collidepoint(e.pos) else False
                 if zero_player_pressed:
                     self.game_zero_player = True
@@ -248,7 +262,7 @@ class TitleScene(Scene):
                 if start_game_pressed and self.game_start_game:
                     if self.game_zero_player:
                         # AI vs AI game
-                        self.manager.go_to(gs.GameScene(None))
+                        self.manager.go_to(gs.GameScene(None, regicide=self.game_regicide))
                     elif self.game_one_player:
                         difficulty = 0
                         if self.game_diff1 == True:
@@ -257,6 +271,6 @@ class TitleScene(Scene):
                             difficulty = 2
                         else:
                             difficulty = 3
-                        self.manager.go_to(gs.GameScene(self.game_one_player, self.game_red, difficulty, self.game_help))
+                        self.manager.go_to(gs.GameScene(self.game_one_player, self.game_red, difficulty, self.game_help, regicide=self.game_regicide))
                     else:
-                        self.manager.go_to(gs.GameScene(self.game_one_player, help=self.game_help))
+                        self.manager.go_to(gs.GameScene(self.game_one_player, help=self.game_help, regicide=self.game_regicide))

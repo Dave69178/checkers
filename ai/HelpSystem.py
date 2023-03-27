@@ -9,5 +9,5 @@ def get_help_message_for_position(game):
       game: (Checkers)
     return: (str)
     """
-    move = str(s.get_ai_move_multiprocess(game.board, game.active_colour, 5, h.checker_value_difference))
+    move = str(s.get_ai_move_multiprocess(game.board, game.active_colour, 5, h.checker_value_difference, game.regicide))
     ch.log_message(game.game_log, f"Consider the move: {move}")

@@ -5,7 +5,7 @@ import ai.HelpSystem as help
 import game.Players as pl
 
 class Checkers:
-	def __init__(self, red_player, black_player, board=None, active_colour=None, help=False) -> None:
+	def __init__(self, red_player, black_player, board=None, active_colour=None, help=False, regicide=False) -> None:
 		"""
 		Initialise Checkers game.
 		params:
@@ -13,6 +13,8 @@ class Checkers:
 		  black_player: (Player)
 		  board (optional): (list[list : int]) Provide a different starting position
 		  active_colour (optional): int
+		  help (optional): (bool)
+		  regicide (optional): (bool)
 		"""
 		if board == None:
 			self.board = ch.create_starting_board()
@@ -32,6 +34,7 @@ class Checkers:
 		self.legal_moves = ch.get_all_one_step_moves_for_colour(self.board, self.active_colour)
 		self.game_log = []
 		self.help = help
+		self.regicide = regicide
 
 	def make_move(self, start_square, end_square):
 		"""
@@ -44,7 +47,7 @@ class Checkers:
 		if is_legal_move:
 			colour = "Black" if self.active_colour == 1 else "Red"
 			ch.log_message(self.game_log, f"{colour} made move: {start_square} to {end_square}")
-			if ch.update_board(self.board, start_square, end_square):
+			if ch.update_board(self.board, start_square, end_square, self.regicide):
 				self._end_turn()
 			else:
 				self.legal_moves = ch.get_all_one_step_moves_for_colour(self.board, self.active_colour)
@@ -57,7 +60,7 @@ class Checkers:
 		yield: (list : [row,col]) - [[row,col], [row,col]]. Yields None to indicate end of moves
 		"""
 		start = time.perf_counter()
-		ai_sequence = s.get_ai_move_multiprocess(self.board, self.active_colour, self.active_player.depth, self.active_player.heuristic_function)
+		ai_sequence = s.get_ai_move_multiprocess(self.board, self.active_colour, self.active_player.depth, self.active_player.heuristic_function, self.regicide)
 		end = time.perf_counter()
 		steps = len(ai_sequence)
 		move = 0
