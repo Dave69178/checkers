@@ -10,6 +10,8 @@ class TitleScene(Scene):
     """
     def __init__(self):
         super().__init__()
+        self.title_font = pygame.font.SysFont('Arial', 56)
+        self.title_font.set_underline(True)
         self.font = pygame.font.SysFont('Arial', 56)
         self.sfont = pygame.font.SysFont('Arial', 32)
         # Game settings
@@ -26,7 +28,7 @@ class TitleScene(Scene):
         self.game_start_game = False
         # Text and Buttons
         # Title
-        self.title = self.font.render('Checkers', True, (255, 255, 255))
+        self.title = self.title_font.render('An aesthetically unappealing checkers program', True, (255, 255, 255))
         self.title_rect = self.title.get_rect(center=(600,50))
         # Rules button
         self.rules = self.font.render("Rules", True, (255,255,255), (160,170,170))

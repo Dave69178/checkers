@@ -13,7 +13,7 @@ FLAGS = 0
 def main():
     pygame.init()
     screen = pygame.display.set_mode(DISPLAY, DEPTH, FLAGS)
-    pygame.display.set_caption("Checkers")
+    pygame.display.set_caption("Aesthetically unappealing checkers")
     timer = pygame.time.Clock()
     running = True
 
