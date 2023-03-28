@@ -1,0 +1,7 @@
+name: checkers_env
+channels:
+ - defaults
+dependencies:
+ - python = 3.10
+ - numpy = 1.23
+ - conda-forge::pygame
