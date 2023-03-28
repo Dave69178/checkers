@@ -14,7 +14,7 @@ The only dependencies are:
 
 
 Uninstallation:
-To remove the conda environment: "conda remove -n checkers_env".
+To remove the conda environment: "conda remove -n checkers_env --all".
 
 This was created on Linux and doesn't run as cleanly on Windows, but functionality should be fine.
 
