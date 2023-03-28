@@ -19,13 +19,13 @@ class AI(Player):
         super().__init__(colour)
         self.difficulty = difficulty
         if difficulty == 1:
-            self.depth = 1
-            self.heuristic_function = heur.checker_value_difference
-        elif difficulty == 2:
             self.depth = 3
-            self.heuristic_function = heur.checker_value_difference
+            self.heuristic_function = heur.checker_position_value
+        elif difficulty == 2:
+            self.depth = 5
+            self.heuristic_function = heur.checker_value_ratio
         elif difficulty == 3:
-            self.depth = 7
+            self.depth = 5
             self.heuristic_function = heur.checker_value_difference
         else:
             raise Exception("Difficulty must be 1,2 or 3")
