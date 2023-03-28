@@ -76,8 +76,8 @@ def get_ai_move(board, ai_colour, depth, heuristic_function, regicide):
 		temp_board = copy.deepcopy(board)
 		for move in seq:
 			ch.update_board(temp_board, move[0], move[1], regicide)
-		position_node = Node(temp_board, active_colour_after_move, False, None)
-		values.append(alpha_beta(position_node, depth, -math.inf, math.inf, True, heuristic_function, ai_colour, regicide))
+		position_node = Node(temp_board, active_colour_after_move, True, None)
+		values.append(alpha_beta(position_node, depth, -math.inf, math.inf, False, heuristic_function, ai_colour, regicide))
 	max_value = -math.inf
 	for i, value in enumerate(values):
 		if value >= max_value:
@@ -104,7 +104,7 @@ def get_ai_move_multiprocess(board, ai_colour, depth, heuristic_function, regici
 		temp_board = copy.deepcopy(board)
 		for move in seq:
 			ch.update_board(temp_board, move[0], move[1], regicide)
-		search_calls.append([Node(temp_board, active_colour_after_move, False, None), depth, -math.inf, math.inf, True, heuristic_function, ai_colour, regicide])
+		search_calls.append([Node(temp_board, active_colour_after_move, True, None), depth, -math.inf, math.inf, False, heuristic_function, ai_colour, regicide])
 	with multiprocessing.Pool() as pool:
 		values = pool.starmap(alpha_beta, search_calls)
 	max_value = -math.inf
