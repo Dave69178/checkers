@@ -112,8 +112,8 @@ def create_checker_game_from_selected_settings(one_player, red, difficulty, help
 	"""
 	if one_player == None:
 		print("AI vs AI")
-		red_player = pl.AI(-1, 2)
-		black_player = pl.AI(1, 3)
+		red_player = pl.AI(-1, 3)
+		black_player = pl.AI(1, 2)
 		return c.Checkers(red_player, black_player, help=help, regicide=regicide)
 	if one_player:
 		print("one player")
