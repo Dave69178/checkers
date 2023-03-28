@@ -86,7 +86,7 @@ class TitleScene(Scene):
         # Start Game button
         self.start_game = self.font.render("Start Game", True, (255,255,255), (160,170,170))
         self.start_game_disabled = self.font.render("Start Game", True, (60,60,60), (90,90,90))
-        self.start_game_rect = self.start_game.get_rect(center=(X_MID, 920))
+        self.start_game_rect = self.start_game.get_rect(center=(X_MID, 940))
 
     def render(self, screen):
         screen.fill((0, 0, 0))
