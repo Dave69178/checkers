@@ -3,6 +3,10 @@ from pygame.locals import *
 from frontend.Scene import Scene
 import frontend.GameScene as gs
 import frontend.RulesScene as rs
+import main as m
+
+X_MID = m.WIN_WIDTH / 2
+Y_MID = m.WIN_HEIGHT / 2
 
 class TitleScene(Scene):
     """
@@ -28,61 +32,61 @@ class TitleScene(Scene):
         self.game_start_game = False
         # Text and Buttons
         # Title
-        self.title = self.title_font.render('An aesthetically unappealing checkers program', True, (255, 255, 255))
-        self.title_rect = self.title.get_rect(center=(600,50))
+        self.title = self.title_font.render('Aesthetically unappealing checkers.', True, (255, 255, 255))
+        self.title_rect = self.title.get_rect(center=(X_MID,50))
         # Rules button
         self.rules = self.font.render("Rules", True, (255,255,255), (160,170,170))
-        self.rules_rect = self.rules.get_rect(center=(600, 150))
+        self.rules_rect = self.rules.get_rect(center=(X_MID, 150))
         # Player count buttons
         self.zero_player = self.font.render("AI vs AI", True, (255,255,255), (160,170,170))
         self.zero_player_selected = self.font.render("AI vs AI", True, (255,255,255), (150,120,70))
-        self.zero_player_rect = self.zero_player.get_rect(center=(900, 550))
+        self.zero_player_rect = self.zero_player.get_rect(center=(X_MID + X_MID / 2, 550))
         self.one_player = self.font.render("One Player", True, (255,255,255), (160,170,170))
         self.one_player_selected = self.font.render("One Player", True, (255,255,255), (150,120,70))
-        self.one_player_rect = self.one_player.get_rect(center=(300, 300))
+        self.one_player_rect = self.one_player.get_rect(center=(X_MID - X_MID / 2, 300))
         self.two_player = self.font.render("Two Player", True, (255,255,255), (160,170,170))
         self.two_player_selected = self.font.render("Two Player", True, (255,255,255), (150,120,70))
-        self.two_player_rect = self.two_player.get_rect(center=(900, 300))
+        self.two_player_rect = self.two_player.get_rect(center=(X_MID + X_MID / 2, 300))
         # 1 Player option buttons
         self.play_as = self.font.render("Play as", True, (255,255,255))
-        self.play_as_rect = self.play_as.get_rect(center=(300, 380))
+        self.play_as_rect = self.play_as.get_rect(center=(X_MID - X_MID / 2, 380))
         self.red = self.font.render("Red", True, (255,255,255), (160,170,170))
         self.red_disabled = self.font.render("Red", True, (60,60,60), (90,90,90))
         self.red_selected = self.font.render("Red", True, (255,255,255), (150,120,70))
-        self.red_rect = self.red.get_rect(center=(150, 450))
+        self.red_rect = self.red.get_rect(center=(X_MID - 3 * X_MID / 4, 450))
         self.black = self.font.render("Black", True, (255,255,255), (160,170,170))
         self.black_disabled = self.font.render("Black", True, (60,60,60), (90,90,90))
         self.black_selected = self.font.render("Black", True, (255,255,255), (150,120,70))
-        self.black_rect = self.black.get_rect(center=(450, 450))
+        self.black_rect = self.black.get_rect(center=(X_MID - X_MID / 4, 450))
         self.difficulty_text = self.font.render("AI Difficulty", True, (255,255,255))
-        self.difficulty_text_rect = self.difficulty_text.get_rect(center=(300, 550))
+        self.difficulty_text_rect = self.difficulty_text.get_rect(center=(X_MID - X_MID / 2, 550))
         self.diff1 = self.font.render(" 1 ", True, (255,255,255), (160,170,170))
         self.diff1_disabled = self.font.render(" 1 ", True, (60,60,60), (90,90,90))
         self.diff1_selected = self.font.render(" 1 ", True, (255,255,255), (150,120,70))
-        self.diff1_rect = self.diff1.get_rect(center=(200, 650))
+        self.diff1_rect = self.diff1.get_rect(center=(X_MID - 3 * X_MID / 4, 650))
         self.diff2 = self.font.render(" 2 ", True, (255,255,255), (160,170,170))
         self.diff2_disabled = self.font.render(" 2 ", True, (60,60,60), (90,90,90))
         self.diff2_selected = self.font.render(" 2 ", True, (255,255,255), (150,120,70))
-        self.diff2_rect = self.diff2.get_rect(center=(300, 650))
+        self.diff2_rect = self.diff2.get_rect(center=(X_MID - X_MID / 2, 650))
         self.diff3 = self.font.render(" 3 ", True, (255,255,255), (160,170,170))
         self.diff3_disabled = self.font.render(" 3 ", True, (60,60,60), (90,90,90))
         self.diff3_selected = self.font.render(" 3 ", True, (255,255,255), (150,120,70))
-        self.diff3_rect = self.diff3.get_rect(center=(400, 650))
+        self.diff3_rect = self.diff3.get_rect(center=(X_MID - X_MID / 4, 650))
         # Additional Settings text
         self.additional = self.font.render("Additional Settings", True, (255,255,255))
-        self.additional_rect = self.additional.get_rect(center=(600, 750))
+        self.additional_rect = self.additional.get_rect(center=(X_MID, 750))
         # Help function button
         self.help = self.font.render("Help", True, (255,255,255), (160,170,170))
         self.help_selected = self.font.render("Help", True, (255,255,255), (150,120,70))
-        self.help_rect = self.help.get_rect(center=(500, 850))
+        self.help_rect = self.help.get_rect(center=(X_MID - X_MID / 4, 850))
         # Regicide Button
         self.regicide = self.font.render("Regicide", True, (255,255,255), (160,170,170))
         self.regicide_selected = self.font.render("Regicide", True, (255,255,255), (150,120,70))
-        self.regicide_rect = self.regicide.get_rect(center=(700, 850))
+        self.regicide_rect = self.regicide.get_rect(center=(X_MID + X_MID / 4, 850))
         # Start Game button
         self.start_game = self.font.render("Start Game", True, (255,255,255), (160,170,170))
         self.start_game_disabled = self.font.render("Start Game", True, (60,60,60), (90,90,90))
-        self.start_game_rect = self.start_game.get_rect(center=(600, 1100))
+        self.start_game_rect = self.start_game.get_rect(center=(X_MID, 920))
 
     def render(self, screen):
         screen.fill((0, 0, 0))

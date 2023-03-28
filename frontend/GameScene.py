@@ -5,12 +5,15 @@ from frontend.Scene import Scene
 import frontend.TitleScene as ts
 import frontend.GameSceneHelper as gsh
 import game.Players as pl
+import main as m
 
-SQUARE_SIZE = 100
-X_OFFSET_BOARD = 200
-Y_OFFSET_BOARD = 200
-X_OFFSET_CHECKERS = 250
-Y_OFFSET_CHECKERS = 250
+SQUARE_SIZE = (100 / 1200) * min(m.WIN_HEIGHT, m.WIN_WIDTH)
+X_OFFSET_BOARD = (200 / 1200) * m.WIN_WIDTH
+Y_OFFSET_BOARD = (200 / 1200) * m.WIN_HEIGHT
+X_OFFSET_CHECKERS = (250 / 1200) * m.WIN_WIDTH
+Y_OFFSET_CHECKERS = (250 / 1200) * m.WIN_HEIGHT
+X_MID = m.WIN_WIDTH / 2
+Y_MID = m.WIN_HEIGHT / 2
 
 class GameScene(Scene):
 	"""
@@ -38,49 +41,49 @@ class GameScene(Scene):
 		self.status_red_move = self.sfont.render('Red to move', True, (255, 255, 255))
 		self.status_black_win = self.sfont.render('Black wins!', True, (255, 255, 255))
 		self.status_red_win = self.sfont.render('Red wins!', True, (255, 255, 255))
-		self.status_rect = self.status_black_move.get_rect(center=(600,90))
+		self.status_rect = self.status_black_move.get_rect(center=(X_MID,(90/1200) * m.WIN_HEIGHT))
 		# Index numbers
 		# Rows
 		self.row0 = self.sfont.render('0', True, (255, 255, 255))
-		self.row0_rect = self.row0.get_rect(center=(X_OFFSET_BOARD - 50, Y_OFFSET_BOARD + 50))
+		self.row0_rect = self.row0.get_rect(center=(X_OFFSET_BOARD - (50/1200) * m.WIN_WIDTH, Y_OFFSET_BOARD + (50/1200) * m.WIN_HEIGHT))
 		self.row1 = self.sfont.render('1', True, (255, 255, 255))
-		self.row1_rect = self.row1.get_rect(center=(X_OFFSET_BOARD - 50, Y_OFFSET_BOARD + 50 + SQUARE_SIZE))
+		self.row1_rect = self.row1.get_rect(center=(X_OFFSET_BOARD - (50/1200) * m.WIN_WIDTH, Y_OFFSET_BOARD + (50/1200) * m.WIN_HEIGHT + SQUARE_SIZE))
 		self.row2 = self.sfont.render('2', True, (255, 255, 255))
-		self.row2_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - 50, Y_OFFSET_BOARD + 50 + SQUARE_SIZE * 2))
+		self.row2_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - (50/1200) * m.WIN_WIDTH, Y_OFFSET_BOARD + (50/1200) * m.WIN_HEIGHT + SQUARE_SIZE * 2))
 		self.row3 = self.sfont.render('3', True, (255, 255, 255))
-		self.row3_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - 50, Y_OFFSET_BOARD + 50 + SQUARE_SIZE * 3))
+		self.row3_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - (50/1200) * m.WIN_WIDTH, Y_OFFSET_BOARD + (50/1200) * m.WIN_HEIGHT + SQUARE_SIZE * 3))
 		self.row4 = self.sfont.render('4', True, (255, 255, 255))
-		self.row4_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - 50, Y_OFFSET_BOARD + 50 + SQUARE_SIZE * 4))
+		self.row4_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - (50/1200) * m.WIN_WIDTH, Y_OFFSET_BOARD + (50/1200) * m.WIN_HEIGHT + SQUARE_SIZE * 4))
 		self.row5 = self.sfont.render('5', True, (255, 255, 255))
-		self.row5_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - 50, Y_OFFSET_BOARD + 50 + SQUARE_SIZE * 5))
+		self.row5_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - (50/1200) * m.WIN_WIDTH, Y_OFFSET_BOARD + (50/1200) * m.WIN_HEIGHT + SQUARE_SIZE * 5))
 		self.row6 = self.sfont.render('6', True, (255, 255, 255))
-		self.row6_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - 50, Y_OFFSET_BOARD + 50 + SQUARE_SIZE * 6))
+		self.row6_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - (50/1200) * m.WIN_WIDTH, Y_OFFSET_BOARD + (50/1200) * m.WIN_HEIGHT + SQUARE_SIZE * 6))
 		self.row7 = self.sfont.render('7', True, (255, 255, 255))
-		self.row7_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - 50, Y_OFFSET_BOARD + 50 + SQUARE_SIZE * 7))
+		self.row7_rect = self.row2.get_rect(center=(X_OFFSET_BOARD - (50/1200) * m.WIN_WIDTH, Y_OFFSET_BOARD + (50/1200) * m.WIN_HEIGHT + SQUARE_SIZE * 7))
 		# Columns
 		self.col0 = self.sfont.render('0', True, (255, 255, 255))
-		self.col0_rect = self.col0.get_rect(center=(X_OFFSET_BOARD + 50, Y_OFFSET_BOARD - 50))
+		self.col0_rect = self.col0.get_rect(center=(X_OFFSET_BOARD + (50/1200) * m.WIN_WIDTH, Y_OFFSET_BOARD - (50/1200) * m.WIN_HEIGHT))
 		self.col1 = self.sfont.render('1', True, (255, 255, 255))
-		self.col1_rect = self.col1.get_rect(center=(X_OFFSET_BOARD + 50 + SQUARE_SIZE, Y_OFFSET_BOARD - 50))
+		self.col1_rect = self.col1.get_rect(center=(X_OFFSET_BOARD + (50/1200) * m.WIN_WIDTH + SQUARE_SIZE, Y_OFFSET_BOARD - (50/1200) * m.WIN_HEIGHT))
 		self.col2 = self.sfont.render('2', True, (255, 255, 255))
-		self.col2_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + 50  + SQUARE_SIZE * 2, Y_OFFSET_BOARD - 50))
+		self.col2_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + (50/1200) * m.WIN_WIDTH  + SQUARE_SIZE * 2, Y_OFFSET_BOARD - (50/1200) * m.WIN_HEIGHT))
 		self.col3 = self.sfont.render('3', True, (255, 255, 255))
-		self.col3_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + 50 + SQUARE_SIZE * 3, Y_OFFSET_BOARD - 50))
+		self.col3_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + (50/1200) * m.WIN_WIDTH + SQUARE_SIZE * 3, Y_OFFSET_BOARD - (50/1200) * m.WIN_HEIGHT))
 		self.col4 = self.sfont.render('4', True, (255, 255, 255))
-		self.col4_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + 50 + SQUARE_SIZE * 4, Y_OFFSET_BOARD - 50))
+		self.col4_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + (50/1200) * m.WIN_WIDTH + SQUARE_SIZE * 4, Y_OFFSET_BOARD - (50/1200) * m.WIN_HEIGHT))
 		self.col5 = self.sfont.render('5', True, (255, 255, 255))
-		self.col5_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + 50 + SQUARE_SIZE * 5, Y_OFFSET_BOARD - 50))
+		self.col5_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + (50/1200) * m.WIN_WIDTH + SQUARE_SIZE * 5, Y_OFFSET_BOARD - (50/1200) * m.WIN_HEIGHT))
 		self.col6 = self.sfont.render('6', True, (255, 255, 255))
-		self.col6_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + 50 + SQUARE_SIZE * 6, Y_OFFSET_BOARD - 50))
+		self.col6_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + (50/1200) * m.WIN_WIDTH + SQUARE_SIZE * 6, Y_OFFSET_BOARD - (50/1200) * m.WIN_HEIGHT))
 		self.col7 = self.sfont.render('7', True, (255, 255, 255))
-		self.col7_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + 50 + SQUARE_SIZE * 7, Y_OFFSET_BOARD - 50))
+		self.col7_rect = self.col2.get_rect(center=(X_OFFSET_BOARD + (50/1200) * m.WIN_WIDTH + SQUARE_SIZE * 7, Y_OFFSET_BOARD - (50/1200) * m.WIN_HEIGHT))
 		# Board graphics
 		self.board_rects = gsh.create_board_squares(SQUARE_SIZE, X_OFFSET_BOARD, Y_OFFSET_BOARD)
 		# Message log
 		self.message_log = []
 		self.log_surface = pygame.Surface((SQUARE_SIZE * 8, 150))
 		self.log_surface.fill((255,255,255))
-		self.log_surface_rect = self.log_surface.get_rect(center=(600,1100))
+		self.log_surface_rect = self.log_surface.get_rect(center=(X_MID,(1100 / 1200) * m.WIN_HEIGHT))
 		# Game
 		self.game = gsh.create_checker_game_from_selected_settings(one_player, red, difficulty, help, regicide)
 		self.selected_square = None

@@ -1,9 +1,9 @@
 import pygame
 from pygame.locals import *
-from frontend.SceneManager import SceneMananger
+import frontend.SceneManager as sm
 
-WIN_WIDTH = 1200
-WIN_HEIGHT = 1200
+WIN_WIDTH = 1000
+WIN_HEIGHT = 1000
 
 DISPLAY = (WIN_WIDTH, WIN_HEIGHT)
 DEPTH = 0
@@ -17,7 +17,7 @@ def main():
     timer = pygame.time.Clock()
     running = True
 
-    manager = SceneMananger()
+    manager = sm.SceneMananger()
 
     while running:
         timer.tick(60)
