@@ -42,4 +42,5 @@ Some other notes regarding performance are within the report.
 ## Notes
 
  - Efficiency and AI performance are rather weak, something that I plan to address in an upcoming project (web app of a similar style).
- - Focus within the limited time period was on creating a bug free game and AI opponent (i.e. no magical moves)
+ - Focus within the limited time period was on creating a bug free game and AI opponent (i.e. no magical moves).
+ - The AI uses a minimax search algorithm with alpha-beta pruning.
